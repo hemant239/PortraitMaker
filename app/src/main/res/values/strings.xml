@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">PortraitMaker</string>
+    <string name="loadingMessage">Sit back and relax, while we do the tough work for you.\nThe process is long but the reward will be fruit full. so let\'s hope for the best</string>
+    <string name="get_main_image">Get Main Image</string>
+    <string name="get_other_images">Get Other Images</string>
+    <string name="start_process">Start Process</string>
+    <string name="warning_for_selection">Remember, we will take a maximum of 4 photos and the output will depend on the photos selected and their order</string>
+    <string name="image_content_des">It is an Image</string>
+    <string name="button_home">HOME</string>
+    <string name="compatible_message">Your Images are compatible, click on Start Process button</string>
+    <string name="check_compatible_message">We are checking the Compatibility of images please wait for a few seconds</string>
 </resources>
