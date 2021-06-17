@@ -6,7 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".LoadingActivity"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@color/colorSecondary">
+
+
+    <ImageView
+        android:layout_width="500dp"
+        android:layout_height="500dp"
+        android:src="@mipmap/ic_launcher"
+        android:id="@+id/finalImage"
+        android:visibility="gone"/>
 
 
 
@@ -18,27 +27,53 @@
         android:textAlignment="center"
         android:textSize="20sp"
         android:id="@+id/loadingText"
+        android:textColor="@color/colorSecondaryText"
+        android:text="@string/loadingMessage"
         />
+
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:padding="5dp"
-        app:trackColor="@color/colorAccent"
+        app:trackColor="@color/colorPrimaryLight"
         app:trackThickness="15dp"
         app:trackCornerRadius="8dp"
         android:id="@+id/loadingProgressBar"
-        android:indeterminate="true"
-        android:visibility="invisible"/>
+        android:indeterminate="true" />
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:padding="5dp"
-        android:text="@string/button_home"
-        android:id="@+id/homeButton"
-        android:visibility="invisible"/>
+        android:orientation="horizontal"
+        android:id="@+id/buttonsLinearLayout"
+        android:layout_marginTop="3dp"
+        android:padding="3dp"
+        android:visibility="gone">
+
+
+        <Button
+            android:id="@+id/homeButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:text="@string/button_home"
+            android:textColor="@color/colorPrimaryText"/>
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:text="@string/button_save"
+            android:textColor="@color/colorPrimaryText"/>
+
+
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

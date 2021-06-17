@@ -3,13 +3,18 @@ package com.hemant239.portraitmaker;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,11 +30,19 @@ public class LoadingActivity extends AppCompatActivity {
 
     TextView loadingText;                                   // to display the different messages during the execution of activity
 
-    Button homeButton;                                      // button to go back to main activity
+    Button homeButton,                                      // button to go back to main activity
+            saveButton;                                     // button to save resultant image in gallery
 
     ArrayList<String> encodedImages;                        //will store the encoded String for other images
     String mainEncodedString;                               //will store the encoded String for main image
 
+
+
+    Bitmap bitmap;                                          //will store the bitmap of the final image
+
+    LinearLayout buttonsLinearLayout;
+
+    ImageView finalImage;                                   //imageView to display the final Image
 
 
     LinearProgressIndicator linearProgressIndicator;
@@ -46,14 +59,25 @@ public class LoadingActivity extends AppCompatActivity {
         encodedImages           =MainActivity.encodedImages;
         mainEncodedString       =MainActivity.mainEncodedString;
 
-        loadingText.setText(R.string.loadingMessage);
-
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startMainActivity();
             }
         });
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                long time=Calendar.getInstance().getTime().getTime();
+                //stores the resultant image to gallery
+                MediaStore.Images.Media.insertImage(getContentResolver(),bitmap,"App"+time,"this is from portraitMaker app");
+
+                Toast.makeText(getApplicationContext(),"Image saved to Gallery",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
 
         //start Async task to run the python code
         new MyAsyncTask().execute();
@@ -77,14 +101,7 @@ public class LoadingActivity extends AppCompatActivity {
 
         //decode the string to byte array and then to bitmap
         byte[] data=android.util.Base64.decode(final_image,Base64.DEFAULT);
-        Bitmap bitmap= BitmapFactory.decodeByteArray(data,0,data.length);
-
-        long time=Calendar.getInstance().getTime().getTime();
-
-
-        //stores the resultant image to gallery
-        MediaStore.Images.Media.insertImage(getContentResolver(),bitmap,"App"+time,"this is from my app");
-
+        bitmap= BitmapFactory.decodeByteArray(data,0,data.length);
     }
 
     private void startMainActivity() {
@@ -95,35 +112,35 @@ public class LoadingActivity extends AppCompatActivity {
 
     private void initializeViews() {
         loadingText             =findViewById(R.id.loadingText);
+
+        finalImage              =findViewById(R.id.finalImage);
+
+
         homeButton             =findViewById(R.id.homeButton);
+        saveButton             =findViewById(R.id.saveButton);
+
+        buttonsLinearLayout     =findViewById(R.id.buttonsLinearLayout);
+
         linearProgressIndicator =findViewById(R.id.loadingProgressBar);
     }
 
 
-
-    public class MyAsyncTask extends AsyncTask<String,Integer,String> {
-
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            linearProgressIndicator.setVisibility(View.VISIBLE);
-        }
-
+    public class MyAsyncTask extends AsyncTask<String,Integer,String>{
         @Override
         protected String doInBackground(String... strings) {
-            long time=Calendar.getInstance().getTime().getTime();
             startPythonCode();
-            long time2=Calendar.getInstance().getTime().getTime();
-            return (time2-time)/1000+"";
+            return null;
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            linearProgressIndicator.setVisibility(View.INVISIBLE);
-            homeButton.setVisibility(View.VISIBLE);
-            loadingText.setText("Your Image has been saved to gallery, click the button below to go back to home screen \n time taken:"+s+" secs ");
+            linearProgressIndicator.setVisibility(View.GONE);
+            loadingText.setVisibility(View.GONE);
+            buttonsLinearLayout.setVisibility(View.VISIBLE);
+            finalImage.setVisibility(View.VISIBLE);
+            finalImage.setImageBitmap(Bitmap.createScaledBitmap(bitmap,500,500,false));
+
         }
     }
 }

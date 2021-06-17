@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.hemant239.portraitmaker.R;
 
 import java.util.ArrayList;
@@ -40,7 +41,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         Uri imageUri=encodedImages.get(position);
-        holder.itemImage.setImageURI(imageUri);
+        holder.itemImage.setClipToOutline(true);
+        Glide.with(context).load(imageUri).into(holder.itemImage);
 
     }
 

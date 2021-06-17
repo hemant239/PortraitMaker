@@ -7,50 +7,69 @@
     tools:context=".MainActivity"
     android:orientation="vertical"
     android:scrollbars="vertical"
+    android:background="@color/colorSecondary"
     >
 
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:id="@+id/mainImage"
-        android:src="@mipmap/ic_launcher_round"
-        android:contentDescription="@string/image_content_des"
-        />
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         android:id="@+id/buttonGetMainImage"
-        android:text="@string/get_main_image"
-        android:layout_toEndOf="@id/mainImage"
-        android:layout_centerHorizontal="true"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonGetAllImages"
-        android:text="@string/get_other_images"
-        android:layout_toEndOf="@id/mainImage"
-        android:layout_below="@id/buttonGetMainImage"
-        android:layout_centerHorizontal="true"/>
-
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonStartProcess"
-        android:text="@string/start_process"
-        android:layout_toEndOf="@id/mainImage"
-        android:layout_below="@id/buttonGetAllImages"
-        android:layout_centerHorizontal="true"
-        android:visibility="gone"/>
+        android:background="@drawable/ic_baseline_insert_photo_24"
+        android:layout_margin="20dp"
+        />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/warning_for_selection"
-        android:layout_below="@id/mainImage"
+        android:text="@string/get_main_image"
+        android:textColor="@color/colorSecondaryText"
+        android:textAlignment="center"
+        android:textSize="15sp"
+        android:layout_marginTop="-20dp"
+        android:layout_alignEnd="@id/buttonGetMainImage"
+        android:layout_alignStart="@id/buttonGetMainImage"
+        android:layout_below="@id/buttonGetMainImage"
+        />
+    <Button
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:id="@+id/buttonGetAllImages"
+        android:background="@drawable/ic_baseline_photo_library_24"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="20dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/get_other_images"
+        android:textColor="@color/colorSecondaryText"
+        android:textAlignment="center"
+        android:textSize="15sp"
+        android:layout_marginTop="-20dp"
+        android:layout_alignEnd="@id/buttonGetAllImages"
+        android:layout_alignStart="@id/buttonGetAllImages"
+        android:layout_below="@id/buttonGetAllImages"
+        />
+
+
+
+
+
+<!--    Comic Sans MS-->
+<!--    Amatic SC-->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/check_compatible_message"
+        android:textColor="@color/colorSecondaryText"
+        android:layout_below="@id/buttonGetMainImage"
+        android:layout_marginTop="5dp"
         android:id="@+id/progressText"
         android:textSize="20sp"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:visibility="invisible"
+        />
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:layout_width="match_parent"
@@ -58,11 +77,11 @@
         android:id="@+id/linearProgressBar"
         app:trackCornerRadius="8dp"
         app:trackThickness="20dp"
-        app:trackColor="@color/colorAccent"
+        app:trackColor="@color/colorPrimaryLight"
         android:layout_margin="10dp"
         android:layout_below="@id/progressText"
-        android:visibility="invisible"
-        android:indeterminate="false"/>
+        android:indeterminate="false"
+        android:visibility="invisible"/>
 
 
 
@@ -74,5 +93,30 @@
         android:padding="5dp"
         android:layout_margin="20dp"
         android:layout_below="@id/linearProgressBar"/>
+
+
+    <Button
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:id="@+id/buttonStartProcess"
+        android:layout_margin="5dp"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/ic_baseline_double_arrow_24"
+        android:visibility="visible"
+        android:layout_above="@id/noteMessage"/>
+
+
+
+    <TextView
+        android:id="@+id/noteMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" Note: maximum 4 images can be used"
+        android:background="@color/colorPrimaryLight"
+        android:textColor="@color/colorPrimaryText"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:layout_alignParentBottom="true"
+        />
 
 </RelativeLayout>

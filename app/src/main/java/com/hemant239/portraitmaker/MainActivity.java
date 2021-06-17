@@ -2,11 +2,15 @@ package com.hemant239.portraitmaker;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -31,9 +35,6 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    ImageView mainImage;
-    //the main image will be displayed in this layout
 
     TextView progressText;
     //this is to show the different messages during the execution
@@ -135,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
         if(resultCode==RESULT_OK){
             if(requestCode==GET_MULTIPLE_IMAGES){
                 assert data != null;
-
                 if(data.getClipData()!=null) {
                     for (int i = 0; i < Math.min(Objects.requireNonNull(data.getClipData()).getItemCount(),4); i++) {
                         Uri uri = data.getClipData().getItemAt(i).getUri();
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
                     mainEncodedString=bitmapToStringImage(bitmap);
-                    Glide.with(getApplicationContext()).load(uri).into(mainImage);
+                    mainImageButton.setBackground(new BitmapDrawable(getResources(),bitmap));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -184,8 +184,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeViews() {
 
-        mainImage=findViewById(R.id.mainImage);
-
         mainImageButton=findViewById(R.id.buttonGetMainImage);
         allImagesButton=findViewById(R.id.buttonGetAllImages);
         startProcessButton=findViewById(R.id.buttonStartProcess);
@@ -208,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
         mImageListAdapter.setHasStableIds(true);
         mImageList.setAdapter(mImageListAdapter);
 
-        mImageListLayoutManager=new GridLayoutManager(getApplicationContext(),3);
+        mImageListLayoutManager=new GridLayoutManager(getApplicationContext(),2);
         mImageList.setLayoutManager(mImageListLayoutManager);
     }
 
@@ -222,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             linearProgressIndicator.setVisibility(View.VISIBLE);
-            progressText.setText(R.string.check_compatible_message);
+            progressText.setVisibility(View.VISIBLE);
             linearProgressIndicator.setProgressCompat(0,true);
 
         }
